@@ -2,8 +2,11 @@
 <html>
 	<head>
 		<script>
-			oldtext = "Результаты: ";
-			z = "4567";
+			z = Array.from("0123456789")
+			z.sort(()=>Math.random()-0.5)
+			if (z[0] == "0"){
+				z[0] = z[9];
+			}
 			function play(form) {
 				y = form.game.value;
 				b = 0;

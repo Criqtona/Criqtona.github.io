@@ -19,8 +19,8 @@
 				    c = c + 1;
 				    }
 				}
-				oldtext = oldtext + "\nЧисло " + y  + " сравниваем с " + String(b) + " Быков и " + String(c-b) + " Коров";
-				alert(oldtext);
+				oldText = document.querySelector('#result1').outerHTML;
+				document.querySelector('#result1').outerHTML  =oldText + '<br>' + "Число " + y + " содержит " + String(b) + " Быков и " + String(c-b) + " Коров";
 				form.game.value = '';
 
 				return false;
@@ -32,5 +32,8 @@
 		<form method="POST" action=""onsubmit="return play(this)">
 			<input name="game" value="">
 		</form>
+		<div id="result1">
+			Результаты:
+		</div>
 	</body>
 </html>

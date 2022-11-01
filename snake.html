@@ -1,23 +1,48 @@
 <html>
 	<head>
 		<style>
+    			#puzzle {
+				display: inline-grid;
+				grid-template-columns: repeat(3, 1fr);
+				padding: 30vw;
+				padding-top: 10px;
+			}
+			input {
+				width: 10vw;
+				height: 10vw;
+				margin: 1px;
+				text-align: center;
+				font-size: 5vw;
+			}
 		</style>
 		<script>
+			letter = ["Г", "Д", "Е", "Е", "С", "Т", "Ж", "У", " "];
+			btn = new Array(9);
+			function play(B){
+				n = btn.indexOf(B);
+				m = letter.indexOf(' ');
+				if ((n-m)**2 == 9 || ((m-n)**2 == 1 && (n-n%3)/3 == (m-m%3)/3)){
+					btn[n].value = " ";
+					btn[m].value = letter[n];
+					letter[m] = letter[n];
+					letter[n] = " ";
+					if(letter.join("") == "ГДЕЕСТУЖ "){
+						setTimeout(() => {alert("ПОБЕДА!");}, 100);
+				}}
+			}
 		</script>
 	</head>
 	<body>
 		<div id=puzzle>
-			<input type=button value='Г'>
-			<input type=button value='Д'>
-			<input type=button value='Е'>
-			<input type=button value='Е'>
-			<input type=button value='С'>
-			<input type=button value='Т'>
-			<input type=button value='Ж'>
-			<input type=button value='У'>
-			<input type=button value=' '>
 		</div>
 		<script>
+			for(i=0; i<9; i++){
+				btn[i] = document.createElement("input");
+				btn[i].type = "button";
+				btn[i].value = letter[i];
+				btn[i].onclick = function() {play(this)};
+				document.getElementById('puzzle').appendChild(btn[i]);
+			}
 		</script>
 	</body>
 </html>

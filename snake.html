@@ -18,6 +18,11 @@
 		<script>
 			letter = ["Г", "Д", "Е", "Е", "С", "Т", "Ж", "У", " "];
 			btn = new Array(9);
+			function play(B){
+				n = btn.indexOf(B);
+				m = letter.indexOf(' ');
+				console.log(n, m)
+			}
 		</script>
 	</head>
 	<body>
@@ -28,6 +33,7 @@
 				btn[i] = document.createElement("input");
 				btn[i].type = "button";
 				btn[i].value = letter[i];
+				btn[i].onclick = function() {play(this)};
 				document.getElementById('puzzle').appendChild(btn[i]);
 			}
 		</script>

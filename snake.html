@@ -6,8 +6,6 @@
 				grid-template-columns: repeat(3, 1fr);
 				padding: 30vw;
 				padding-top: 10px;
-				
-    background-color: lavenderblush;
 			}
 			input {
 				width: 10vw;
@@ -15,10 +13,11 @@
 				margin: 1px;
 				text-align: center;
 				font-size: 5vw;
-				background-color: #f5b7dc47;
 			}
 		</style>
 		<script>
+			letter = ["Г", "Д", "Е", "Е", "С", "Т", "Ж", "У", " "];
+			btn = new Array(9);
 		</script>
 	</head>
 	<body>
@@ -26,10 +25,10 @@
 		</div>
 		<script>
 			for(i=0; i<9; i++){
-				btn = document.createElement("input");
-				btn.type = "button";
-				btn.value = "Ж";
-				document.getElementById('puzzle').appendChild(btn);
+				btn[i] = document.createElement("input");
+				btn[i].type = "button";
+				btn[i].value = letter[i];
+				document.getElementById('puzzle').appendChild(btn[i]);
 			}
 		</script>
 	</body>

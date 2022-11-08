@@ -21,7 +21,7 @@
 			function play(B){
 				n = btn.indexOf(B);
 				m = letter.indexOf(' ');
-				if (true){
+				if ((n-m)**2 == 9 || ((m-n)**2 == 1 && (n-n%3)/3 == (m-m%3)/3)){
 					btn[n].value = " ";
 					btn[m].value = letter[n];
 					letter[m] = letter[n];

@@ -21,7 +21,12 @@
 			function play(B){
 				n = btn.indexOf(B);
 				m = letter.indexOf(' ');
-				console.log(n, m)
+				if (true){
+					btn[n].value = " ";
+					btn[m].value = letter[n];
+					letter[m] = letter[n];
+					letter[n] = " ";
+				}
 			}
 		</script>
 	</head>

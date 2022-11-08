@@ -26,7 +26,9 @@
 					btn[m].value = letter[n];
 					letter[m] = letter[n];
 					letter[n] = " ";
-				}
+					if(letter.join("") == "ГДЕЕСТУЖ "){
+						setTimeout(() => {alert("ПОБЕДА!");}, 100);
+				}}
 			}
 		</script>
 	</head>

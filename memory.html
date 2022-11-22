@@ -26,9 +26,9 @@
            </div>
           <script>
              for(i=0; i<9; i++){
-                btn = document.createElement("input");
-                btn.type = "button";
-                btn.value = i;
+                btn[i] = document.createElement("input");
+                btn[i].type = "button";
+                btn[i].value = i;
                 document.getElementById('puzzle').appendChild(btn);
              }
           </script>

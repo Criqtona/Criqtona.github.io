@@ -21,17 +21,13 @@
     </head>
     <body>
          <div id=puzzle>
-         <input type=button value="0">
-         <input type=button value="1">
-         <input type=button value="2">
-         <input type=button value="3">
-         <input type=button value="4">
-         <input type=button value="5">
-         <input type=button value="6">
-         <input type=button value="7">
-         <input type=button value="8">
            </div>
           <script>
+             for(i=0; i<9; i++){
+                btn = document.createElement("input");
+                btn.type = "buttion"
+                btn.value = i;
+                document.getElementById('puzzle').appendChild(btn);
           </script>
     </body>
 </html>

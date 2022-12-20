@@ -3,7 +3,7 @@
 		<style>
     			#puzzle {
 				display: inline-grid;
-				grid-template-columns: repeat(3, 1fr);
+				grid-template-columns: repeat(8, 1fr);
 				padding: 30vw;
 				padding-top: 10px;
 			}
@@ -16,9 +16,10 @@
 			}
 		</style>
 		<script>
-			letter = Array.from("012345678");
+			nbtn = 48
+			letter = Array.from("QWERTYUOPASDFGHKLZXCVBNMQWERTYUOPASDFGHKLZXCVBNM");
 			letter.sort(()=>Math.random()-0.5)
-			btn = new Array(9);
+			btn = new Array(nbtn);
 			function play(B){
 				n = btn.indexOf(B);
 				console.log(n)
@@ -29,7 +30,7 @@
 		<div id=puzzle>
 		</div>
 		<script>
-			for(i=0; i<9; i++){
+			for(i=0; i<nbtn; i++){
 				btn[i] = document.createElement("input");
 				btn[i].type = "button";
 				btn[i].value = letter[i];

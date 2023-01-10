@@ -23,6 +23,15 @@
 			function play(B){
 				n = btn.indexOf(B);
 				btn[n].value = letter[n];
+				if(memory){
+				memory = false ;
+				}
+				else if (letter[n] != letter[m]){	
+				btn[n].value = "  " ;
+				}
+				else {
+					memory = true
+				}
 				m = n 
 				console.log(n) ;
 			}

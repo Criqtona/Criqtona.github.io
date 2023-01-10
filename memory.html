@@ -22,6 +22,8 @@
 			btn = new Array(nbtn);
 			function play(B){
 				n = btn.indexOf(B);
+				if btn[n].value != "  "){
+					return;
 				btn[n].value = letter[n];
 				if(memory){
 				memory = false ;

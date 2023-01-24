@@ -1,0 +1,45 @@
+<html>
+	<head>
+		<style>
+    			#puzzle {
+				display: inline-grid;
+				grid-template-columns: repeat(3, 1fr);
+				padding: 30vw;
+				padding-top: 10px;
+			}
+			input {
+				width: 5vw;
+				height: 5vw;
+				margin: 1px;
+				text-align: center;
+				font-size: 4vw;
+			}
+		</style>
+		<script>
+			numberOfButtons = 100;
+			playArea = Array(numberOfButtons); 
+      mines = 20;
+      
+      
+			letter.sort(()=>Math.random()-0.5)
+			btn = new Array(numberOfButtons);
+			function play(B){
+				n = btn.indexOf(B);
+				console.log(n)
+			}
+		</script>
+	</head>
+	<body>
+		<div id=puzzle>
+		</div>
+		<script>
+			  for(i=0; i<numberOfButtons; i++){
+				btn[i] = document.createElement("input");
+				btn[i].type = "button";
+				btn[i].value = letter[i];
+				btn[i].onclick = function() {play(this)};
+				document.getElementById('puzzle').appendChild(btn[i]);
+			}
+		</script>
+	</body>
+</html>

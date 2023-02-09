@@ -1,62 +1,134 @@
 <html>
 	<head>
 		<style>
-    			#puzzle {
-				display: inline-grid;
-				grid-template-columns: repeat(4, 1fr);
-				padding: 30vw;
-				padding-top: 10px;
-			}
-			input {
-				width: 6vw;
-				height: 6vw;
-				margin: 1px;
-				text-align: center;
-				font-size: 5vw;
-				animation-duration: 5s;
-				border-radius: 15px;
-				border: 2px;
-				border-color: grey;
-				border-style: outset;
-				padding: 1vw;
+			body {
+				text-align:center
 			}
 		</style>
 		<script>
-			numberOfButtons = 16;
-			columns = 4;
-			playGround = new Array(numberOfButtons);
-			for(i=0; i<numberOfButtons; i+=2){
-				playGround[i] = 0;
-				playGround[i+1] = 1;
+			mine = new Image();
+			mine.src = "mine.png";
+			gameOwer = false;
+			rowCol = 20;
+			size = 28;
+			delta = 6;
+			matrix = [];
+			flags = [];
+			playArea = [];
+			for(i=0; i<rowCol**2; i++){
+				matrix[i] = 0;
+				flags[i] = 0;
+				playArea[i] = 0;
+				if(i/6 - parseInt(i/6) == 0){
+					playArea[i] = 1;
+				}
 			}
-			playGround.sort(()=>Math.random()-0.5);
-			letter = Array("steel.png","silver.png");
-			btn = new Array(numberOfButtons);
-			function play(B){
-				n = btn.indexOf(B);
-				playGround[n] = playGround[n] ? 0 : 1;
-				for(i=n%columns; i<numberOfButtons; i+=columns){
-					playGround[i] = playGround[i] ? 0 : 1;
-					btn[i].src = letter[playGround[i]];
+			playArea.sort(()=>Math.random()-0.5);
+			function row(n){
+				return parseInt(n / rowCol);
+			}
+			function col(n){
+				return n % rowCol;
+			}
+			function prn(txt, n){
+				ctx.clearRect(col(n)*size+2, row(n)*size+2, size-5, size-5);
+				ctx.strokeStyle = 'black';
+				ctx.fillStyle = 'black';
+				ctx.fillText(txt, col(n)*size+size/2, row(n)*size+size-5);
+				if(size>24){
+					ctx.strokeText(txt, col(n)*size+size/2, row(n)*size+size-5);
 				}
-				for(i=n-n%columns; i<n-n%columns+columns; i++){
-					playGround[i] = playGround[i] ? 0 : 1;
-					btn[i].src = letter[playGround[i]];
+			}
+			function quantity(n){
+				quant = 0;
+				if(col(n)>0){quant += playArea[n-1];}
+				if(col(n)<(rowCol-1)){quant += playArea[n+1];}
+				if(row(n)>0){quant += playArea[n-rowCol];}
+				if(row(n)>0 && col(n)>0){quant += playArea[n-rowCol-1];}
+				if(row(n)>0 && col(n)<(rowCol-1)){quant += playArea[n-rowCol+1];}
+				if(row(n)<(rowCol-1)){quant += playArea[n+rowCol];}
+				if(row(n)<(rowCol-1) && col(n)>0){quant += playArea[n+rowCol-1];}
+				if(row(n)<(rowCol-1) && col(n)<(rowCol-1)){quant += playArea[n+rowCol+1];}
+				return quant;
+			}
+			function filler(m){
+				ctx.fillStyle = 'darkKhaki';
+				ctx.fillRect(col(m)*size+2, row(m)*size+2, size-5, size-5);
+				if(col(m)>0){play(m-1);}
+				if(col(m)<(rowCol-1)){play(m+1);}
+				if(row(m)>0){play(m-rowCol);}
+				if(row(m)>0 && col(m)>0){play(m-rowCol-1);}
+				if(row(m)>0 && col(m)<(rowCol-1)){play(m-rowCol+1);}
+				if(row(m)<(rowCol-1)){play(m+rowCol);}
+				if(row(m)<(rowCol-1) && col(m)>0){play(m+rowCol-1);}
+				if(row(m)<(rowCol-1) && col(m)<(rowCol-1)){play(m+rowCol+1);}
+			}
+			function play(n){
+				if(matrix[n] == 1){
+					return;
 				}
+				matrix[n] = 1;
+				prn(quantity(n), n);
+				if(quantity(n) == 0){
+					filler(n);
+				}
+			}
+			function miner(event){
+				if(gameOwer){
+					alert('Game Ower!');
+					return;
+				}
+				mouseX = event.x-event.target.offsetLeft;
+				mouseY = event.y-event.target.offsetTop;
+				cell = parseInt(mouseY / size) * rowCol + parseInt(mouseX / size);
+				if(matrix[cell] == 1){
+					return;
+				}
+				if(btnFlag.checked){
+					if(flags[cell] == 0){
+					prn("🚩", cell);
+					flags[cell] = 1;
+					return;
+					}
+					else{
+					prn(" ", cell);
+					flags[cell] = 0;
+					return;
+					}
+				}
+				if(playArea[cell] == 1){
+					ctx.clearRect(col(cell)*size+2, row(cell)*size+2, size-5, size-5);
+					ctx.textAlign = '';
+					ctx.drawImage(mine, col(cell)*size, row(cell)*size-1, size, size);
+					gameOwer = true;
+					return;
+				}
+				play(cell);
+			}
+			window.onload = function draw(){
+				btnFlag = document.getElementById('flag');
+				cnvs = document.getElementById('cnvs');
+				cnvs.width = rowCol*size;
+				cnvs.height = rowCol*size;
+				cnvs.addEventListener("mousedown", miner, false);
+				ctx = cnvs.getContext('2d');
+				ctx.strokeStyle = 'green';
+				ctx.textAlign = 'center';
+				ctx.font = (size-4)+'px sans-serif';
+				for(m=0; m<rowCol; m++){
+					for(n=0; n<rowCol; n++){
+						ctx.strokeRect(n*size+1, m*size+1, size-3, size-3);
+				}}
 			}
 		</script>
 	</head>
 	<body>
-		<div id=puzzle>
-		</div>
-		<script>
-			for(i=0; i<numberOfButtons; i++){
-				btn[i] = document.createElement("input");
-				btn[i].type = "image";
-				btn[i].src = letter[playGround[i]];
-				btn[i].onclick = function() {play(this)};
-				document.getElementById('puzzle').appendChild(btn[i]);
-			}
-		</script>
+		<canvas id="cnvs"></canvas>
+		<form>
+			Ход
+			<input type=radio name=btn checked>
+			<input type=radio name=btn id="flag">
+			Флаг
+		</form>
 	</body>
 </html>
